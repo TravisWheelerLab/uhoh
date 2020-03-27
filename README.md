@@ -47,6 +47,8 @@ here: <https://dart.dev/get-dart>. You will need at least version
   - Build a native binary: `make binary`
   - Format the code (do this prior to making a PR): `make format`
 
+Run `make` by itself to see the list of available targets.
+
 ### TODO
 
   - Add unit and functional test suites
