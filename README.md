@@ -43,6 +43,7 @@ Uhoh is written in [Dart](https://dart.dev). Install the toolchain
 here: <https://dart.dev/get-dart>. You will need at least version
 2.7.0.
 
+  - Fetch build dependencies: `make setup`
   - Build a native binary: `make binary`
   - Format the code (do this prior to making a PR): `make format`
 
