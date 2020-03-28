@@ -1,5 +1,8 @@
 import 'dart:io';
 
+/// A statically-typed configuration that will generally be
+/// constructed from command line arguments or perhaps a
+/// configuration file.
 abstract class Config {
   String get authToken;
 
@@ -20,6 +23,9 @@ abstract class Config {
   Iterable<String> get users;
 }
 
+/// A cut-rate builder for the [Config] class that implements
+/// the [Config] interface and "builds" by returning itself,
+/// upcast to [Config].
 class ConfigBuilder implements Config {
   @override
   String authToken;
@@ -85,5 +91,5 @@ class ConfigError extends Error {
   ConfigError([this.message]);
 
   @override
-  String toString() => 'config error';
+  String toString() => 'config error: $message';
 }

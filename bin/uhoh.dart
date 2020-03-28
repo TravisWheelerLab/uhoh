@@ -23,7 +23,7 @@ Future<void> main(List<String> arguments) async {
   }
 
   _log.onRecord.listen((record) {
-    print('[${record.level}] ${record.loggerName}: ${record.message}');
+    stderr.write('[${record.level}] ${record.loggerName}: ${record.message}\n');
   });
 
   final client = Uhoh(config: config);
@@ -99,7 +99,7 @@ Config makeConfig(List<String> arguments) {
 
   // Print the fancy help information and then quit if we got
   // the --help or -h flag.
-  if (argResults['help']) {
+  if (argResults['help'] as bool) {
     var firstLine = 'usage: uhoh ' +
         argParser.options.values.map((option) {
           var next = '[--${option.name}';
