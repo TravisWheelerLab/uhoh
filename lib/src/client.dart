@@ -7,6 +7,9 @@ import 'package:uhoh/src/repo.dart';
 
 final _log = Logger('uhoh');
 
+/// The Uhoh client is quite simple right now, it allows
+/// the consumer to back up a set of repositories based
+/// on a configuration.
 class Uhoh {
   final Config config;
 
@@ -14,14 +17,12 @@ class Uhoh {
     @required this.config,
   });
 
-  Future<void> update(String namespace, String name) async {
-    //
-  }
-
+  /// Create, or update, backups of all repositories as
+  /// defined by the client's configuration.
   Future<void> updateAll() async {
     await config.targetDirectory.create(recursive: true);
 
-    await _repos().forEach((repo) {
+    (await _repos()).forEach((repo) {
       final local = path.join(
         config.targetDirectory.path,
         repo.owner.login,
@@ -41,24 +42,36 @@ class Uhoh {
     });
   }
 
-  Stream<Repository> _repos() async* {
+  /// Fetch all the repos we will need to clone.
+  ///
+  /// We grab all of the repos at once to avoid timing out
+  /// the connection while we make the clones. If we want
+  /// to make this more memory-efficient, we could clone
+  /// one user / organization at a time.
+  Future<Iterable<Repository>> _repos() async {
     final github = GitHub(
       auth: Authentication.withToken(config.authToken),
     );
 
+    final all = <Repository>[];
+
     for (final user in config.users) {
-      yield* github.repositories
+      await github.repositories
           .listUserRepositories(user)
           .where(_filterLanguage)
-          .where(_filterName);
+          .where(_filterName)
+          .forEach((r) => all.add(r));
     }
 
     for (final organization in config.organizations) {
-      yield* github.repositories
+      await github.repositories
           .listOrganizationRepositories(organization)
           .where(_filterLanguage)
-          .where(_filterName);
+          .where(_filterName)
+          .forEach((r) => all.add(r));
     }
+
+    return all;
   }
 
   bool _filterLanguage(Repository repo) {
