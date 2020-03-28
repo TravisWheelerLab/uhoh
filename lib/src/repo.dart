@@ -8,6 +8,8 @@ final _log = Logger('uhoh');
 /// A thin abstraction over a repository that includes a single
 /// remote and possibly a local, bare clone.
 class Repo {
+  bool _isEmpty;
+
   String _localPath;
 
   String _nsPath;
@@ -33,6 +35,11 @@ class Repo {
   String get remotePath => _remotePath;
 
   void cloneSync() {
+    if (_isRemoteEmpty()) {
+      _log.info('skipped cloning (empty) "$_remotePath"');
+      return;
+    }
+
     final localExists = Directory(_localPath).existsSync();
     if (localExists) {
       return;
@@ -57,6 +64,11 @@ class Repo {
   }
 
   void fetchSync() {
+    if (_isRemoteEmpty()) {
+      _log.info('skipped fetching (empty) "$_remotePath"');
+      return;
+    }
+
     _log.info('fetching "$_remotePath"');
 
     cloneSync();
@@ -72,6 +84,36 @@ class Repo {
     if (result.exitCode != 0) {
       _throwForResult(result);
     }
+  }
+
+  bool _isRemoteEmpty() {
+    if (_isEmpty != null) {
+      return _isEmpty;
+    }
+
+    final result = Process.runSync(
+      'git',
+      [
+        'ls-remote',
+        '-h',
+        '--exit-code',
+        _remotePath,
+      ],
+      workingDirectory: _nsPath,
+    );
+
+    switch (result.exitCode) {
+      case 0:
+        _isEmpty = false;
+        break;
+      case 2:
+        _isEmpty = true;
+        break;
+      default:
+        _throwForResult(result);
+    }
+
+    return _isEmpty;
   }
 
   void _throwForResult(ProcessResult result) {
@@ -91,5 +133,11 @@ class RepoError extends Error {
   RepoError(this.exitCode, this.stdout, this.stderr);
 
   @override
-  String toString() => 'repo error';
+  String toString() => 'repo error\n'
+      'exit code\n'
+      '$exitCode\n'
+      'stdout\n'
+      '$stdout\n'
+      'stderr\n'
+      '$stderr';
 }
