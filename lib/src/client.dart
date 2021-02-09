@@ -38,7 +38,7 @@ class Uhoh {
       Repo(
         local: local,
         remote: remote,
-      )..fetchSync();
+      ).fetchSync();
     });
   }
 
