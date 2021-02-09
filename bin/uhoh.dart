@@ -23,7 +23,8 @@ Future<void> main(List<String> arguments) async {
   }
 
   _log.onRecord.listen((record) {
-    stderr.write('[${record.level}] ${record.loggerName}: ${record.message}\n');
+    stderr.write(
+        '${record.time.toUtc()} [${record.level}] ${record.loggerName}: ${record.message}\n');
   });
 
   final client = Uhoh(config: config);
