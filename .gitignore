@@ -8,8 +8,14 @@ build/
 # Directory created by dartdoc
 doc/api/
 
+# IDE nonsense
+*.swp
+*~
+.idea/
+
 uhoh-*
 
 .DS_Store
 test-token.sh
 scratch/
+token.sh
