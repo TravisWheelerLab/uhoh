@@ -1,4 +1,4 @@
-name: PolyA CI
+name: Uhoh CI
 
 on: [push, pull_request]
 
