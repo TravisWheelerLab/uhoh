@@ -1,6 +1,6 @@
 name: uhoh
 description: A simple tool to backup GitHub repos.
-version: 1.0.0
+version: 1.1.0
 homepage: https://github.com/TravisWheelerLab/uhoh
 
 environment:
