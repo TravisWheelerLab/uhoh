@@ -1,6 +1,6 @@
 # Uhoh
 
-A simple tool to create backups of your GitHub repositories.
+A simple tool to create and maintain backups of your GitHub repositories.
 
 ## Use
 
