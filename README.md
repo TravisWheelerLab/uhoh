@@ -1,3 +1,5 @@
+![Uhoh CI](https://github.com/TravisWheelerLab/uhoh/workflows/Uhoh%20CI/badge.svg)
+
 # Uhoh
 
 A simple tool to create and maintain backups of your GitHub repositories.
