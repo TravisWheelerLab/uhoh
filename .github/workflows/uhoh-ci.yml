@@ -1,0 +1,34 @@
+name: PolyA CI
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-20.04
+    container:
+      image: traviswheelerlab/uhoh
+      volumes:
+        - ${{ github.workspace }}:/code
+    steps:
+      - uses: actions/checkout@v1
+      - run: make setup check
+
+  check-format:
+    runs-on: ubuntu-20.04
+    container:
+      image: traviswheelerlab/uhoh
+      volumes:
+        - ${{ github.workspace }}:/code
+    steps:
+      - uses: actions/checkout@v1
+      - run: make setup check-format
+
+  build-binary:
+    runs-on: ubuntu-20.04
+    container:
+      image: traviswheelerlab/uhoh
+      volumes:
+        - ${{ github.workspace }}:/code
+    steps:
+      - uses: actions/checkout@v1
+      - run: make setup binary
