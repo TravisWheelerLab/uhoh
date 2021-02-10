@@ -31,7 +31,7 @@ container-binary:
 format:
 	@dartfmt -w -l 80 --fix .
 
-package: setup check check-format binary
+package:
 	@zip uhoh-$(PLATFORM)-$(VERSION).zip uhoh-$(PLATFORM) README.md LICENSE AUTHORS
 
 setup:
