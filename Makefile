@@ -4,9 +4,11 @@ help:
 	@echo "container        - build the container image"
 	@echo "container-binary - build a binary using the container image"
 	@echo "format           - format the code"
+	@echo "package          - build a binary and zip it with documentation"
 	@echo "setup            - install build dependencies"
 
-PLATFORM := $(shell uname -s)
+PLATFORM := $(shell uname -s | tr '[:upper:]' '[:lower:]')
+VERSION := $(shell git describe --tags)
 
 binary:
 	@dart2native -o uhoh-$(PLATFORM) bin/uhoh.dart
@@ -28,6 +30,9 @@ container-binary:
 
 format:
 	@dartfmt -w -l 80 --fix .
+
+package: setup check check-format binary
+	@zip uhoh-$(PLATFORM)-$(VERSION).zip uhoh-$(PLATFORM) README.md LICENSE AUTHORS
 
 setup:
 	@pub get
