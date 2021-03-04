@@ -5,4 +5,4 @@ RUN apt-get -q update && \
     mkdir -p /code
 VOLUME /code
 WORKDIR /code
-CMD ["make", "setup", "binary"]
+CMD ["make", "setup", "binary", "zip"]
