@@ -4,6 +4,7 @@ help:
 	@echo "builder        - build the builder image"
 	@echo "check          - run the test suite"
 	@echo "check-format   - check code formatting"
+	@echo "clean          - remove built assets for all platforms"
 	@echo "format         - format the code"
 	@echo "setup          - install build dependencies"
 	@echo "zip            - build a binary and zip it with documentation"
@@ -28,6 +29,9 @@ check:
 
 check-format:
 	@test "$(shell dartfmt -l 80 --fix -n .)" = ""
+
+clean:
+	@rm uhoh-*
 
 format:
 	@dartfmt -w -l 80 --fix .
