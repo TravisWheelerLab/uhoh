@@ -39,5 +39,5 @@ format:
 setup:
 	@pub get
 
-zip:
+zip: binary
 	@zip uhoh-$(PLATFORM)-$(VERSION).zip uhoh-$(PLATFORM) README.md LICENSE AUTHORS
