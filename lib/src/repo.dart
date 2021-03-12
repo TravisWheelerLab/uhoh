@@ -51,7 +51,7 @@ class Repo {
       'git',
       [
         'clone',
-        '--bare',
+        '--mirror',
         _remotePath,
         _localPath,
       ],
@@ -77,6 +77,7 @@ class Repo {
       'git',
       [
         'fetch',
+        '--all',
       ],
       workingDirectory: _localPath,
     );
